@@ -10,6 +10,7 @@ fetch('data/ebooks.json')
       const card = document.createElement('div');
       card.className = 'ebook';
 
+      // Isi kad ebook
       card.innerHTML = `
         <img src="covers/${e.cover}" alt="${e.title}">
         <h3>${e.title}</h3>
@@ -17,16 +18,15 @@ fetch('data/ebooks.json')
         <div class="price">RM${e.price}</div>
       `;
 
+      // Button beli (redirect ke backend emasmurah.com)
       const btn = document.createElement('button');
       btn.className = 'btn';
       btn.textContent = 'Beli Sekarang';
 
-      // 🔥 CONFIRM REDIRECT
       btn.addEventListener('click', () => {
         window.location.href =
-          window.location.href =
-  'https://emasmurah.com/buy.php?ebook=' + encodeURIComponent(e.id);
-
+          'https://emasmurah.com/buy.php?ebook=' +
+          encodeURIComponent(e.id);
       });
 
       card.appendChild(btn);
@@ -35,6 +35,9 @@ fetch('data/ebooks.json')
   })
   .catch(err => {
     console.error(err);
-    document.getElementById('ebookGrid').innerHTML =
-      '<p style="color:#9ca3af">Gagal load ebook.</p>';
+    const grid = document.getElementById('ebookGrid');
+    if (grid) {
+      grid.innerHTML =
+        '<p style="color:#9ca3af">Gagal load ebook.</p>';
+    }
   });
