@@ -1,1 +1,24 @@
+[
+  {
+    "id": "ebook1",
+    "title": "Panduan Ringkas Jana Duit",
+    "price": 9,
+    "desc": "Langkah asas jana pendapatan dengan cara mudah.",
+    "cover": "ebook1.jpg"
+  },
+  {
+    "id": "ebook2",
+    "title": "Asas Kekalkan Pendapatan",
+    "price": 12,
+    "desc": "Urus duit dan bina pendapatan stabil.",
+    "cover": "ebook2.jpg"
+  },
+  {
+    "id": "ebook3",
+    "title": "Mini Ebook Income Digital",
+    "price": 7,
+    "desc": "Pengenalan dunia income digital untuk beginner.",
+    "cover": "ebook3.jpg"
+  }
+]
 
