@@ -1,155 +1,38 @@
-<!DOCTYPE html>
-<html lang="ms">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ebook Digital Malaysia</title>
+fetch('data/ebooks.json')
+  .then(res => res.json())
+  .then(ebooks => {
+    const grid = document.getElementById('ebookGrid');
+    if (!grid) return;
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    grid.innerHTML = '';
 
-<style>
-:root{
-  --bg:#020617;
-  --card:#0b122b;
-  --accent:#22c55e;
-  --text:#f5f5f5;
-  --muted:#9ca3af;
-  --radius:18px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:Inter,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-.container{
-  width:100%;
-  max-width:520px;
-  margin:auto;
-  padding:20px 14px 60px;
-}
-.card{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:22px;
-  margin-bottom:20px;
-  border:1px solid rgba(255,255,255,.06);
-}
-.hero{text-align:center}
-.badge{
-  display:inline-block;
-  background:rgba(34,197,94,.15);
-  color:var(--accent);
-  padding:6px 14px;
-  border-radius:999px;
-  font-size:12px;
-  margin-bottom:12px;
-}
-.trust,.trust-pay{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-top:14px;
-}
-.trust span,.trust-pay span{
-  background:rgba(255,255,255,.06);
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:11px;
-}
+    ebooks.forEach(e => {
+      const card = document.createElement('div');
+      card.className = 'ebook';
 
-/* Ebook card */
-.ebook{
-  background:#020617;
-  border-radius:16px;
-  padding:16px;
-  display:flex;
-  flex-direction:column;
-}
-.ebook img{
-  width:100%;
-  border-radius:12px;
-  margin-bottom:12px;
-}
-.ebook h3{font-size:16px;margin-bottom:6px}
-.ebook p{font-size:13px;color:var(--muted)}
-.price{font-size:18px;font-weight:800;margin-top:8px}
+      card.innerHTML = `
+        <img src="covers/${e.cover}" alt="${e.title}">
+        <h3>${e.title}</h3>
+        <p>${e.desc}</p>
+        <div class="price">RM${e.price}</div>
+      `;
 
-/* BUTTON — FIX CLICK */
-.btn{
-  margin-top:auto;
-  background:var(--accent);
-  color:#020617;
-  text-align:center;
-  padding:14px;
-  border-radius:14px;
-  font-weight:800;
-  border:none;
-  cursor:pointer;
+      const btn = document.createElement('button');
+      btn.className = 'btn';
+      btn.textContent = 'Beli Sekarang';
 
-  position:relative;
-  z-index:10;
-  pointer-events:auto;
-}
+      // 🔥 CONFIRM REDIRECT
+      btn.addEventListener('click', () => {
+        window.location.href =
+          'https://google.com/?ebook=' + encodeURIComponent(e.id);
+      });
 
-/* Grid */
-@media(min-width:768px){
-  .container{max-width:1100px}
-  .ebook-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:22px;
-  }
-}
-</style>
-</head>
-
-<body>
-<div class="container">
-
-  <!-- HERO -->
-  <div class="card hero">
-    <span class="badge">Produk Digital Rasmi</span>
-    <h1>Ebook Bahasa Melayu</h1>
-    <p style="color:#9ca3af;font-size:14px">
-      Ebook ringkas, praktikal & mudah difahami untuk orang Malaysia.
-    </p>
-
-    <div class="trust">
-      <span>🔒 Selamat</span>
-      <span>⚡ Akses Pantas</span>
-      <span>🇲🇾 Malaysia</span>
-    </div>
-
-    <div class="trust-pay">
-      <span>🏦 FPX Online Banking</span>
-      <span>📱 E-Wallet</span>
-      <span>💳 Visa / Mastercard</span>
-    </div>
-  </div>
-
-  <!-- EBOOK LIST -->
-  <div class="card">
-    <h2 style="margin-bottom:14px">Ebook Ditawarkan</h2>
-    <div id="ebookGrid" class="ebook-grid"></div>
-  </div>
-
-  <!-- CONTACT -->
-  <div class="card">
-    <h2>Hubungi Kami</h2>
-    <p style="color:#9ca3af">
-      WhatsApp: <strong>+60137777035</strong><br>
-      Email: <strong>ebookdigitalMalay@gmail.com</strong>
-    </p>
-  </div>
-
-  <div style="text-align:center;color:#9ca3af;font-size:12px">
-    © 2025 Ebook Digital Malaysia
-  </div>
-
-</div>
-
-<script src="js/app.js"></script>
-</body>
-</html>
+      card.appendChild(btn);
+      grid.appendChild(card);
+    });
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById('ebookGrid').innerHTML =
+      '<p style="color:#9ca3af">Gagal load ebook.</p>';
+  });
