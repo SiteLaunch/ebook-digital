@@ -1,15 +1,9 @@
 fetch('data/ebooks.json')
-  .then(res => {
-    if (!res.ok) {
-      throw new Error('Gagal load ebooks.json');
-    }
-    return res.json();
-  })
+  .then(res => res.json())
   .then(ebooks => {
     const grid = document.getElementById('ebookGrid');
     if (!grid) return;
 
-    // Clear (safety)
     grid.innerHTML = '';
 
     ebooks.forEach(e => {
@@ -22,9 +16,11 @@ fetch('data/ebooks.json')
         <p>${e.desc}</p>
         <div class="price">RM${e.price}</div>
 
-        <!-- DUMMY BUY BUTTON -->
-        <a href="https://example.com/buy?ebook=${encodeURIComponent(e.id)}"
-           class="btn">
+        <!-- BUY BUTTON (TEST REDIRECT) -->
+        <a href="https://google.com/?ebook=${encodeURIComponent(e.id)}"
+           class="btn"
+           target="_blank"
+           rel="noopener">
            Beli Sekarang
         </a>
       `;
@@ -34,9 +30,6 @@ fetch('data/ebooks.json')
   })
   .catch(err => {
     console.error(err);
-    const grid = document.getElementById('ebookGrid');
-    if (grid) {
-      grid.innerHTML =
-        '<p style="color:#9ca3af">Gagal load ebook. Sila refresh.</p>';
-    }
+    document.getElementById('ebookGrid').innerHTML =
+      '<p style="color:#9ca3af">Gagal load ebook.</p>';
   });
