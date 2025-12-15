@@ -16,13 +16,10 @@ fetch('data/ebooks.json')
         <p>${e.desc}</p>
         <div class="price">RM${e.price}</div>
 
-        <!-- BUY BUTTON (TEST REDIRECT) -->
-        <a href="https://google.com/?ebook=${encodeURIComponent(e.id)}"
-           class="btn"
-           target="_blank"
-           rel="noopener">
-           Beli Sekarang
-        </a>
+        <button class="btn"
+          onclick="window.location.href='https://google.com/?ebook=${encodeURIComponent(e.id)}'">
+          Beli Sekarang
+        </button>
       `;
 
       grid.appendChild(card);
