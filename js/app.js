@@ -24,7 +24,9 @@ fetch('data/ebooks.json')
       // 🔥 CONFIRM REDIRECT
       btn.addEventListener('click', () => {
         window.location.href =
-          'https://google.com/?ebook=' + encodeURIComponent(e.id);
+          window.location.href =
+  'https://emasmurah.com/buy.php?ebook=' + encodeURIComponent(e.id);
+
       });
 
       card.appendChild(btn);
